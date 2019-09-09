@@ -4,6 +4,7 @@ Personal Storj V3 Scripts
 This is my personal script made to check up on my nodes with the new dashboard API, I based it off from a script made by @kevink on the storj forums. This script will only run on linux systems. 
 
 For this script to run please ensure jq is installed on your system; run sudo apt install jq
+
 Also, make the script runnable by using the command sudo chmod +x checkapi.sh
 
 How to use the script?
