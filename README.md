@@ -7,9 +7,9 @@ This is my personal script made to check up on my nodes with the new dashboard A
 
 **Also, make the script runnable by using the command sudo chmod +x checkapi.sh**
 
-How to use the script?
+## How to use the script?
 
-Simply call the script passing the server address first and then the port number of the API, see example below. If not server or port are given then the default localhost and port 14002 are used.
+Simply call the script passing the server address first and then the port number of the API, see example below. If the script is not given any server or port, the default localhost and port 14002 are used.
 
 ./checkapi.sh 192.168.0.1 14002
 
