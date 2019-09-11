@@ -1,8 +1,7 @@
 # StorjScripts
 Personal Storj V3 Scripts
 
-This is my personal script made to check up on my nodes with the new dashboard API, I based it off from a script made by @kevink on the storj forums. This script will only run on debian based systems like Ubuntu. 
-
+This is my personal script made to check up on my nodes with the new dashboard API, I based it off from a script made by @kevink on the storj forums. It has then been improved and streamlined by @ReneSmeekes. This script will only run on debian based systems like Ubuntu. 
 
 ## Script Requirements
 1. The package jq is needed, install it by running the command sudo apt install jq
@@ -18,6 +17,7 @@ This is my personal script made to check up on my nodes with the new dashboard A
     --mount type=bind,source="<identity-dir>",destination=/app/identity \
     --mount type=bind,source="<storage-dir>",destination=/app/config \
     --name storagenode storjlabs/storagenode:beta
+4. Please note that to edit the docker run command, you will need to stop your node, remove the container and then rerun the new docker run command. Please see storj documentation on editing parameters at [storj docs](https://documentation.storj.io/resources/frequently-asked-questions#how-do-i-change-change-my-parameters-such-as-payout-address-allotted-storage-space-and-bandwidth).
   
 **Intructions on setting up a Node: https://documentation.storj.io**
 
