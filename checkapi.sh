@@ -19,7 +19,7 @@ else
 	port=$2
 fi
 
-readarray -t sats < <( curl -s $server:$port/api/dashboard | jq .data.satellites | jq -r '.[]')
+readarray -t sats < <( curl -s $server:$port/api/dashboard | jq -r '.data.satellites[].id' )
 
 echo "Scores are based on recent node performance, all time stats are provided for reference only"
 
