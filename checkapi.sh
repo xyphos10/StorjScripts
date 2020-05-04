@@ -19,7 +19,9 @@ else
 	port=$2
 fi
 
-readarray -t sats < <( curl -s $server:$port/api/dashboard | jq -r '.data.satellites[].id' )
+#readarray -t sats < <( curl -s $server:$port/api/sno | jq -r '.data.satellites[].id' )
+
+readarray -t sats < <( curl -s $server:$port/api/sno/ | jq '.satellites | .[] | .id' )
 
 echo "Scores are based on recent node performance, all time stats are provided for reference only"
 
@@ -28,27 +30,27 @@ printf " \n"
 for n in "${sats[@]}"
 do
 	echo -e "${GRE}Satellite: ${NC}${YEL}$n${NC}"
-
-	success=$(curl -s $server:$port/api/satellite/$n | jq .data.audit.successCount)
-	total=$(curl -s $server:$port/api/satellite/$n | jq .data.audit.totalCount)
-	score=$(curl -s $server:$port/api/satellite/$n | jq .data.audit.score)
+        n=$(echo $n | tr --delete '"')
+	success=$(curl -s $server:$port/api/sno/satellite/$n | jq '.audit.successCount')
+	total=$(curl -s $server:$port/api/sno/satellite/$n | jq '.audit.totalCount')
+	score=$(curl -s $server:$port/api/sno/satellite/$n | jq '.audit.score')
 
 	if [ $total -gt '0' ]
 	then
-		audrate=$(awk "BEGIN { pc=100*${success}/${total}; i=int(pc); print (pc-i<0.5)?i:i+1 }")
-		echo -e "${GRE}Audits:${NC} Current score: ${RED}$score${NC} (all time stats: $success/$total >> $audrate%)"
+		#audrate=$(awk "BEGIN { pc=100*${success}/${total}; i=int(pc); print (pc-i<0.5)?i:i+1 }")
+		echo -e "${GRE}Audits:${NC} Current score: ${RED}$score${NC} (all time stats: $success/$total)"
 	else
 		echo -e "${GRE}Audits:${NC} No audits from this satellite!"
 	fi
 
-	success=$(curl -s $server:$port/api/satellite/$n | jq .data.uptime.successCount)
-	total=$(curl -s $server:$port/api/satellite/$n | jq .data.uptime.totalCount)
-	score=$(curl -s $server:$port/api/satellite/$n | jq .data.uptime.score)
+	success=$(curl -s $server:$port/api/sno/satellite/$n | jq '.uptime.successCount')
+	total=$(curl -s $server:$port/api/sno/satellite/$n | jq '.uptime.totalCount')
+	score=$(curl -s $server:$port/api/sno/satellite/$n | jq '.uptime.score')
 
 	if [ $total -gt '0' ]
 	then
-		uprate=$(awk "BEGIN { pc=100*${success}/${total}; i=int(pc); print (pc-i<0.5)?i:i+1 }")
-		echo -e "${GRE}Uptime:${NC} Current score: ${RED}$score${NC} (all time stats: $success/$total >> $uprate%)"
+		#uprate=$(awk "BEGIN { pc=100*${success}/${total}; i=int(pc); print (pc-i<0.5)?i:i+1 }")
+		echo -e "${GRE}Uptime:${NC} Current score: ${RED}$score${NC} (all time stats: $success/$total)"
 	else
 		echo -e "${GRE}Uptime:${NC} No uptime checks from this satellite!"
 	fi
